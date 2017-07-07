@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>Quadtree</title>
+
+    <link type="text/css" rel="stylesheet" href="css/atom-one-dark.css">
+    <link type="text/css" rel="stylesheet" href="css/styles.min.css">
+</head>
+
+<body>
+
+    <aside>
+        <header><h1>Quadtree</h1></header><ul><li><a href="index.html">Home page</a></li></ul><ul><li class="category">Structures</li><li id="menu-Quadtree"><a href="Quadtree.html">Quadtree</a></li></ul>
+    </aside>
+
+    <main>
+        <header>
+            <h1>lowlight.quadtree.js</h1>
+        </header>
+        <section>
+            
+
+
+
+
+
+<section class="source linenums">
+    <pre><code class="javascript">/**
+ * Copyright 2017, Lecoq Simon (lowlight.fr)
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
+ * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+ */
+(function (global) {
+    //Registering
+        if (typeof global.Lowlight === "undefined") { global.Lowlight = {} }
+        if ((typeof module === "object")&amp;&amp;(typeof module.exports === "object")) { module.exports = global.Lowlight }
+
+    //Indexes
+        let INDEX = {NW:0, NE:1, SE:2, SW:3}
+        let INDEXES = {NW:[0], NE:[1], SE:[2], SW:[3], BE:[1, 2], BW:[0, 3], NB:[0, 1], SB:[2, 3], BB:[0, 1, 2, 3]}
+
+    //Includes
+        
+class Quadtree {
+    /**
+     * &lt;pre>
+     * Quadtree class.
+     * A quadtree is a tree data structure in which each internal node has exactly four children.
+     * &lt;/pre>
+     * @param {Object} [options] - Options
+     * @param {Number} [options.x=0] - X coordinate
+     * @param {Number} [options.y=0] - Y coordinate
+     * @param {Number} [options.width=0] - Width (&lt;span class="bold">options.w&lt;/span> is also accepted)
+     * @param {Number} [options.height=0] - Height (&lt;span class="bold">options.h&lt;/span> is also accepted)
+     * @param {Number} [options.max_items=0] - Max items per instance
+     * @param {Number} [options.max_depth=0] - Max depth
+     * @example &lt;caption>Basic usage&lt;/caption>
+     * //Declare quadtree
+     * let quadtree = new Lowlight.Quadtree({x:0, y:0, width:400, height:400})
+     *
+     * //Add some datas
+     * let a = quadtree.add({x:20, y:20, width:10, height:10})
+     * let b = quadtree.add({x:70, y:120, width:10, height:15, ax:0.5, ay:0.5, mx:5, my:10})
+     *
+     * //Retrieve items in the same node as &lt;span class="bold">a&lt;/span>
+     * quadtree.retrieve(a)
+     *
+     * //Update quadtree
+     * a.x += 10
+     * a.y += 10
+     * quadtree.rebuild()
+     *
+     * //Change quadtree configurations
+     * quadtree.max_items = 10
+     * quadtree.max_depth = 4
+     *
+     * //Remove a node
+     * quadtree.delete(a)
+     *
+     * //Remove all nodes
+     * quadtree.clear()
+     * @category structures
+     */
+        constructor(options = {}) {
+            /**
+             * X coordinate.
+             * @readonly
+             * @type {Number}
+             */
+                this.x = options.x||0
+
+            /**
+             * Y coordinate.
+             * @readonly
+             * @type {Number}
+             */
+                this.y = options.y||0
+
+            /**
+             * Width.
+             * @readonly
+             * @type {Number}
+             */
+                this.width = Number.isFinite(options.width) ? options.width : Number.isFinite(options.w) ? options.w : 300
+
+            /**
+             * Height.
+             * @readonly
+             * @type {Number}
+             */
+                this.height = Number.isFinite(options.height) ? options.height : Number.isFinite(options.h) ? options.h : 300
+
+            /**
+             * Set of inserted items in instance
+             * @readonly
+             * @type {Set}
+             */
+                this.items = new Set()
+
+            /**
+             * Set of inserted items in instance and its children
+             * &lt;div class="alert danger">
+             * Unlike other ES6 data structures, &lt;span class="bold">Quadtree.entries&lt;/span> does &lt;span class="bold">not&lt;/span> return an &lt;span class="bold">Iterator [value, value]&lt;/span>.
+             * &lt;/div>
+             * @readonly
+             * @type {Set}
+             */
+                this.entries = new Set()
+
+            /**
+             * Reference to parent instance.
+             * @readonly
+             * @type {Set|null}
+             */
+                this.parent = options.parent||null
+
+            /**
+             * References to child instances.
+             * @readonly
+             * @type {Set|null}
+             */
+                this.nodes = [null, null, null, null]
+
+            /**
+             * Depth of current instance.
+             * @readonly
+             * @type {Set|null}
+             */
+                this.depth = (this.parent !== null) ? this.parent.depth + 1 : 0
+
+            //Unreferenced properties
+                this.max_items = options.max_items||4
+                this.max_depth = options.max_depth||4
+        }
+
+    /**
+     * &lt;pre>
+     * Max items per instance.
+     * If there are more item in an instance, it will be splitted (if max depth isn't reached).
+     * Updating this property through root instance will update all child instances.
+     * &lt;/pre>
+     * @type {Number}
+     */
+        get max_items() { return (this.parent !== null) ? this.parent.max_items : this._max_items }
+        set max_items(v) { if (this.root) { this._max_items = v } }
+
+    /**
+     * &lt;pre>
+     * Max depth of quadtree.
+     * Updating this property through root instance will update all child instances.
+     * &lt;/pre>
+     * @type {Number}
+     */
+        get max_depth() { return (this.parent !== null) ? this.parent.max_depth : this._max_depth }
+        set max_depth(v) { if (this.root) { this._max_depth = v } }
+
+    /**
+     * Remove all items from instance.
+     * @param {Boolean} [soft=false] - If enabled, entries list won't be cleared (mainly used for rebuild)
+     */
+        clear(soft = false) {
+            if (!soft) { this.entries.clear() }
+            this.items.clear()
+            if (!this.leaf) { this.nodes.map(node => node.clear()) }
+            if (!this.root) { this.items = this.entries = this.parent = this.nodes = null }
+            else { this.nodes = [null, null, null, null] }
+        }
+
+    /**
+     * Insert method.
+     * @param {Object} item - Item to insert
+     * @param {Number} item.x - X coordinate
+     * @param {Number} item.y - Y coordinate
+     * @param {Number} item.width - Width (&lt;span class="bold">item.w&lt;/span> is also accepted)
+     * @param {Number} item.height - Height (&lt;span class="bold">item.h&lt;/span> is also accepted)
+     * @param {Number} [item.ax] - X anchor (value between 0 and 1)
+     * @param {Number} [item.ay] - Y anchor (value between 0 and 1)
+     * @param {Number} [item.mx] - X margin (will virtually increase width)
+     * @param {Number} [item.mx] - Y margin (will virtually increase height)
+     */
+        add(item) {
+            //Reference
+                this.entries.add(item)
+            //Insertion (split if max capacity reached)
+                if (this.leaf) {
+                    this.items.add(item)
+                    if ((this.items.size > this.max_items)&amp;&amp;(this.depth &lt; this.max_depth)) { this.split() }
+                } else { this.index(item).map(i => this.nodes[i].add(item)) }
+                return item
+        }
+
+    /**
+     * Removal method.
+     * @param {Object} item - Item to remove
+     * @return {Object} Removed item
+     */
+        delete(item) {
+            //Reference
+                this.entries.delete(item)
+            //Deletion
+                if (this.leaf) { this.items.delete(item) }
+                else { this.index(item).map(i => this.nodes[i].delete(item)) }
+        }
+
+    /**
+     * Retrieve items closed to &lt;span class="bold">item&lt;/span> given in argument.
+     * &lt;div class="alert warning">
+     * &lt;span class="bold">list&lt;/span> argument is reserved for recursive usage of this method.
+     * &lt;/div>
+     * @param {Object} item - Item to test
+     * @param {Set} [list] - Reference to current list
+     * @return {Set} Set of items which could potentially collide with item
+     */
+        retrieve(item, list = new Set()) {
+            //Add items if in the same leaf
+                if (this.leaf) { this.items.forEach(item => list.add(item)) }
+                else { this.index(item).map(i => this.nodes[i].retrieve(item, list)) }
+            //Removing self-item
+                return (list.delete(item), list)
+        }
+
+    /**
+     * Rebuild current instance.
+     * @return {Quadtree} Current instance
+     */
+        rebuild() {
+            this.clear(true)
+            this.entries.forEach(item => this.add(item))
+        }
+
+    /**
+     * &lt;pre>
+     * Split instance in four child instances.
+     * Rearrange items to fulfill item capacity constraints.
+     * &lt;/pre>
+     * @protected
+     */
+        split() {
+            if (this.leaf) {
+                //Child nodes
+                    this.nodes[INDEX.NW] = new Quadtree({parent:this, width:this.width/2, height:this.height/2, x:this.x, y:this.y})
+                    this.nodes[INDEX.NE] = new Quadtree({parent:this, width:this.width/2, height:this.height/2, x:this.x + this.width/2, y:this.y})
+                    this.nodes[INDEX.SE] = new Quadtree({parent:this, width:this.width/2, height:this.height/2, x:this.x + this.width/2, y:this.y + this.height/2})
+                    this.nodes[INDEX.SW] = new Quadtree({parent:this, width:this.width/2, height:this.height/2, x:this.x, y:this.y + this.height/2})
+                //Rearrange items
+                    this.items.forEach(item => { this.add(item) })
+                    this.items.clear()
+            }
+        }
+
+    /**
+     * Tell in which node an item should belongs.
+     * &lt;div class="alert info">
+     * If an item doesn't fit completly in a node, its reference will be duplicated in node's children.
+     * &lt;/div>
+     * @protected
+     * @param {Object} item - Item
+     * @param {Number} [item.ax] - X anchor (value between 0 and 1)
+     * @param {Number} [item.ay] - Y anchor (value between 0 and 1)
+     * @param {Number} [item.mx] - X margin (will virtually increase width)
+     * @param {Number} [item.mx] - Y margin (will virtually increase height)
+     * @return {Number[]} Indexes where item should be added
+     */
+        index(item) {
+            //Coordinates, dimensions, margins and anchors
+                let x = item.x||0, y = item.y||0, ax = item.ax||0, ay = item.ay||0, mx = item.mx||0, my = item.my||0
+                let iw = Number.isFinite(item.width ) ? item.width  : Number.isFinite(item.w) ? item.w : 0
+                let ih = Number.isFinite(item.height) ? item.height : Number.isFinite(item.h) ? item.h : 0
+                let ox = ax*iw, oy = ay*ih
+            //Comparison with vertical/horizontal mid-points to determine in which node item should be added
+                let v = y-oy-my + ih+my &lt; (this.y + this.height/2) ? "N" : y-oy-my > (this.y + this.height/2) ? "S" : "B"
+                let h = x-ox-mx + iw+mx &lt; (this.x + this.width /2) ? "W" : x-ox-mx > (this.x + this.width /2) ? "E" : "B"
+
+            //Return
+                return INDEXES[v+h]
+        }
+
+    /**
+     * Tell if instance is a leaf (has no children).
+     * @readonly
+     * @type {Boolean}
+     * @return {Boolean} True if instance has no children
+     */
+        get leaf() { return !this.nodes[0] }
+
+    /**
+     * Tell if instance is Quadtree's root.
+     * @readonly
+     * @type {Boolean}
+     * @return {Boolean} True if instance is root
+     */
+        get root() { return this.depth === 0 }
+
+    /**
+     * Quadtree size (number of entries).
+     * @type {Number}
+     * @return {Number} Number of entries
+     */
+        get size() { return this.entries.size }
+
+    /**
+     * This method executes a provided function once for each value, in insertion order.
+     * @param {Function} callback - Callback function
+     * @param {Object} [thisArg] - Value of this
+     */
+        forEach(callback, thisArg) { this.entries.forEach(callback, thisArg) }
+
+    /**
+     * Tell if an item belongs to instance
+     * @param {Object} item - Item to test
+     * @return {Boolean} True if &lt;span class="bold">item&lt;/span> is found in quadtree
+     */
+        has(item) { return this.entries.has(item) }
+
+    /**
+     * Return an Iterator which contains all values contained in Quadtree, in insertion order.
+     * @return {Iterator} Inserted items in instance
+     */
+        values() { return this.entries.values() }
+
+    /**
+     * Return an Iterator which contains all values contained in Quadtree, in insertion order.
+     * @return {Iterator} Inserted items in instance
+     */
+        keys() { return this.entries.keys() }
+}
+
+
+        global.Lowlight.Quadtree = Quadtree
+
+})(typeof window !== "undefined" ? window : this)
+</code></pre>
+</section>
+ 
+
+        </section>
+        <footer>
+            Generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.3</a> on Fri Jul 07 2017 14:34:52 GMT+0200 (Paris, Madrid (heure d’été))
+            <br />
+            Embellished by <a href="https://github.com/lowlighter/jsdoc-spotlight">Spotlight</a> theme
+        </footer>
+    </main>
+
+    <script src="js/jquery-3.1.1.min.js"></script>
+    <script src="js/scripts.min.js"></script>
+    <script src="js/highlight.pack.js"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+</body>
+</html>

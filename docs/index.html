@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>Quadtree</title>
+
+    <link type="text/css" rel="stylesheet" href="css/atom-one-dark.css">
+    <link type="text/css" rel="stylesheet" href="css/styles.min.css">
+</head>
+
+<body>
+
+    <aside>
+        <header><h1>Quadtree</h1></header><ul><li><a href="index.html">Home page</a></li></ul><ul><li class="category">Structures</li><li id="menu-Quadtree"><a href="Quadtree.html">Quadtree</a></li></ul>
+    </aside>
+
+    <main>
+        <header>
+            <h1>Home</h1>
+        </header>
+        <section>
+            
+
+
+ 
+
+
+
+    <h3> </h3>
+
+
+
+ 
+
+ 
+
+
+
+
+
+    <section>
+        <div class="readme">
+            <h1>Quadtree</h1><p>This library is an implementation in JavaScript of <strong>Quadtrees</strong> structures.</p>
+<ul>
+<li><a href="https://lowlighter.github.io/quadtree/demo/">Live demo</a></li>
+<li><a href="https://lowlighter.github.io/quadtree/docs/">Documentation</a></li>
+</ul>
+<h1>Features</h1><ul>
+<li><strong>Light weight</strong> libray</li>
+<li>Configure maximum <strong>nodes capacity</strong> and <strong>depth level</strong></li>
+<li><strong>Respect ES6</strong> data structures prototype (add, delete, clear, has, forEach, ...)</li>
+<li>Support <strong>all</strong> object types</li>
+</ul>
+<h2>Getting Started</h2><p>First of all, you need to include the library :</p>
+<pre class="prettyprint source lang-html"><code>    &lt;script src=&quot;./bin/lowlight.quadtree.js&quot;>&lt;/script></code></pre><p>Then you may want create an alias for convenience :</p>
+<pre class="prettyprint source lang-javascript"><code>    let Quadtree = Lowlight.Quadtree</code></pre><h2>Create a quadtree</h2><p>You can create a new quadtree this way :</p>
+<pre class="prettyprint source lang-javascript"><code>    let quadtree = new Quadtree({width:400, height:400})</code></pre><h3>Configuring quadtree</h3><p>You can change at any time the maximum capacity for each node (<strong>max_items</strong>) before subdividing and the max depth (<strong>max_depth</strong>) of quadtree instance.</p>
+<p>This may need a rebuild afterwards.</p>
+<pre class="prettyprint source lang-javascript"><code>    quadtree.max_items = 4
+    quadtree.max_depth = 7</code></pre><h2>Managing data</h2><h3>Add some datas</h3><p>You can add any types of data in your quadtree.
+The only requirement are the <strong>x</strong>, <strong>y</strong>, <strong>width</strong> (or <strong>w</strong>) and <strong>height</strong> (or <strong>h</strong>) properties.</p>
+<pre class="prettyprint source lang-javascript"><code>    let a = quadtree.add({x:20, y:20, width:10, height:10})</code></pre><h4>Special properties</h4><p><strong>ax</strong> and <strong>ay</strong> (values between 0 and 1) are used to change anchor point.
+This is the point used for calculations. [0;0] is default and means that anchor is Top-Left whereas [1;1] means Bottom-Right.
+You may prefer to use the middle of your shape by choosing [0.5;0.5] as anchor point.</p>
+<p><strong>mx</strong> and <strong>my</strong> are used to add margins to both sides to virtually increase width and height.</p>
+<pre class="prettyprint source lang-javascript"><code>    let b = quadtree.add({x:70, y:120, w:10, h:15, ax:0.5, ay:0.5, mx:5, my:10})</code></pre><h3>Remove data</h3><p>You can remove a single node this way :</p>
+<pre class="prettyprint source lang-javascript"><code>    quadtree.delete(a)</code></pre><p>And clear entirely the quadtree with this :</p>
+<pre class="prettyprint source lang-javascript"><code>    quadtree.clear()</code></pre><h3>Update data</h3><p>After updating an item from your quadtree, you may need to rebuild it.
+Note that this operation is quite expensive.</p>
+<pre class="prettyprint source lang-javascript"><code>    quadtree.rebuild()</code></pre><p>It can be called from sub-quadtrees instance to rebuild only a part of quadtree</p>
+<pre class="prettyprint source lang-javascript"><code>    quadtree.nodes[0].rebuild()</code></pre><h2>Retrieve items in the same node</h2><p>You can retrieve all the items in the same node of another item with <strong>retrieve(item)</strong> method.
+It returns a <strong>Set</strong> of items.</p>
+<pre class="prettyprint source lang-javascript"><code>    let tests = quadtree.retrieve(a)
+    tests.forEach(item => console.log(a.collide(item) ? &quot;Collision&quot; : &quot;Nothing&quot;))</code></pre><h2>Project content</h2><table>
+<thead>
+<tr>
+<th></th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>/bin</strong></td>
+<td>Production and test files</td>
+</tr>
+<tr>
+<td><strong>/src</strong></td>
+<td>Source files</td>
+</tr>
+<tr>
+<td><strong>/demo</strong></td>
+<td>Demo and codes examples</td>
+</tr>
+<tr>
+<td><strong>/docs</strong></td>
+<td>Library's documentations</td>
+</tr>
+</tbody>
+</table>
+<h3>Rebuild project</h3><p>If you need to rebuild project, just run the following command :</p>
+<pre class="prettyprint source"><code>npm run build
+# /bin will be updated with /src scripts files
+# /docs will be updated</code></pre><p>Don't forget to install dependencies before running the previous command.</p>
+<pre class="prettyprint source"><code>npm install</code></pre><h2>License</h2><p>This project is licensed under the MIT License. See <a href="https://github.com/lowlighter/quadtree/blob/master/LICENSE.md">LICENSE.md</a> file for details.</p>
+        </div>
+    </section>
+
+ 
+
+        </section>
+        <footer>
+            Generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.3</a> on Fri Jul 07 2017 14:34:52 GMT+0200 (Paris, Madrid (heure d’été))
+            <br />
+            Embellished by <a href="https://github.com/lowlighter/jsdoc-spotlight">Spotlight</a> theme
+        </footer>
+    </main>
+
+    <script src="js/jquery-3.1.1.min.js"></script>
+    <script src="js/scripts.min.js"></script>
+    <script src="js/highlight.pack.js"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+</body>
+</html>

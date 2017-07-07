@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title></title>
+        <link rel="stylesheet" href="./css/style.css">
+        <link type="text/css" rel="stylesheet" href="css/atom-one-dark.css">
+    </head>
+    <body>
+        <header>
+            <h1>Quadtree</h1>
+            <div><a href="https://github.com/lowlighter/quadtree">GitHub</a></div>
+            <div><a href="https://lowlighter.github.io/quadtree/docs/">Documentation</a></div>
+            <div><a href="https://lowlight.fr">Lowlight.fr</a></div>
+        </header>
+        <div class="container">
+            <div class="description">
+                <p>
+                    This is a live demo from this <a href="https://github.com/lowlighter/quadtree">library</a>.<br>
+                    You can change interract with drop-down menus and buttons to change application's behaviour.<br>
+                    Demo code will be updated accordingly.<br>
+                </p>
+                <p>
+                    Quadtrees are data structures with many usages.<br>
+                    In this demo, they have been used to reduce collisions tests.
+                    <ul>
+                        <li>White particle didn't a got collision test</li>
+                        <li>Yellow particles got a collision test</li>
+                        <li>Red particles got a collision test and result was positive (ie. collision with player)</li>
+                    </ul>
+                    You can move player's sprite with <span class="bold">ZQSD</span> or <span class="bold">WASD</span> keys (must be enabled below).
+                </p>
+                <p>
+                    Sprites ripped by <span class="bold">Azu</span> from <span class="bold">Touhou Project : Mystical Chain</span>
+                </p>
+                <p class="cross-origin-error" style="display:none; color:red">
+                    It seems you're running demo in a local environment. Some browsers don't support local files loading when files aren't served from a local server.<br>
+                    Try using <a href="https://lowlighter.github.io/quadtree/demo/" style="color:red">online demo</a> or use a local server.
+                </p>
+            </div>
+            <div class="app card">
+                <h3>Live demo</h3>
+                <div class="wrapper">
+                    <div class="pixi-view"></div>
+                    <div>
+                        <table>
+                            <tr>
+                                <td>Particles number</td>
+                                <td><input type="text" class="particles-numbers" value="0" disabled></td>
+                            </tr>
+                            <tr>
+                                <td>Collisions test</td>
+                                <td><input type="text" class="particles-tested" value="0" disabled></td>
+                            </tr>
+                            <tr>
+                                <td>Nodes capacity</td>
+                                <td>
+                                    <select name="items">
+                                        <option value="5">&nbsp;5</option>
+                                        <option value="10">10</option>
+                                        <option value="15">15</option>
+                                        <option value="20">20</option>
+                                        <option value="25">25</option>
+                                        <option value="30">30</option>
+                                        <option value="35">35</option>
+                                        <option value="40">40</option>
+                                        <option value="45">45</option>
+                                        <option value="50">50</option>
+                                    </select>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Maximum depth</td>
+                                <td>
+                                    <select name="depth">
+                                        <option value="1">1</option>
+                                        <option value="2">2</option>
+                                        <option value="3">3</option>
+                                        <option value="4">4</option>
+                                        <option value="5">5</option>
+                                        <option value="6">6</option>
+                                    </select>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Keyboard controls</td>
+                                <td>
+                                    <button name="controls">Enable</button>
+                                    <input type="text" name="keyboard" value="" style="position:absolute;width:0; min-width:0; overflow:hidden; opacity:0">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="2" class="bold">Particles generation patterns</td>
+                                <td>
+                            </tr>
+                            <tr>
+                                <td>Circle</td>
+                                <td>
+                                    <select name="pattern-circle">
+                                        <option value="1">Enabled</option>
+                                        <option value="0">Disabled</option>
+                                    </select>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Linear</td>
+                                <td>
+                                    <select name="pattern-line">
+                                        <option value="1">Enabled</option>
+                                        <option value="0">Disabled</option>
+                                    </select>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Forward</td>
+                                <td>
+                                    <select name="pattern-forward">
+                                        <option value="1">Enabled</option>
+                                        <option value="0">Disabled</option>
+                                    </select>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Towards</td>
+                                <td>
+                                    <select name="pattern-towards">
+                                        <option value="1">Enabled</option>
+                                        <option value="0">Disabled</option>
+                                    </select>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Random</td>
+                                <td>
+                                    <select name="pattern-random">
+                                        <option value="1">Enabled</option>
+                                        <option value="0">Disabled</option>
+                                    </select>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <div class="code card">
+                <h3>Code sample</h3>
+                <pre>
+                    <code>
+    //Define some variables and create quadtree
+        let size = 400, particles = <span class="code-particles">0</span>
+        let quadtree = new Lowlight.Quadtree({max_items:<span class="code-items">4</span>, max_depth:<span class="code-depth">7</span>})
+
+    //Create particles
+        for (let i = 0; i < particles; i++) {
+            quadtree.add(new Particle(size*Math.random(), size*Math.random()))
+        }
+
+    //Add player
+        let player = new Player(size*Math.random(), size*Math.random())
+
+    //Update method
+        ;(function update() {
+            //Update particles positions
+                quadtree.entries.forEach(particle => {
+                    particle.x += Math.random()
+                    particle.y += Math.random()
+                })
+
+            //Rebuild quadtree
+                quadtree.rebuild()
+
+            //Test possibles collisions with player
+                quadtree.retrieve(player).forEach(item => {
+                    if (player.collide(item)) { console.log("Collision !") }
+                })
+
+            //Animation frame
+                requestAnimationFrame(update)
+        })()
+                </code>
+            </pre>
+        </div>
+        <div class="code card">
+            <h3>Miscelleanous</h3>
+            <pre>
+                <code>
+    //Particle class
+        class Particle {
+            //Constructor
+                constructor(x, y) {
+                    //Position
+                        this.x = x, this.y = y
+
+                    //Dimensions
+                    //this.w and this.h are alias for this.width and this.height
+                        this.width = 10, this.height = 10
+
+                    //Anchor (values between 0 and 1)
+                    //Allows to move item's anchor point (used point for quadtree calculations)
+                    //[0;0] means Top-Left whereas [1;1] means Bottom-Right.
+                    //[0.5;0.5] means that item's center is taken as anchor point.
+                        this.ax = this.ay = 0.5
+
+                    //Margins
+                    //Allows to add margins on both sizes
+                    //For example, if width is 10 but you need to test collisions in a 20 radius range,
+                    //just add 15 to margins (ax * w + mx = 0.5 * 10 + 15 = 20)
+                        this.mx = 15
+                        this.my = 0
+                }
+        }
+
+    //Player class
+        class Player extends Particle {
+            //Constructor
+                constructor(x, y) { super(x, y) }
+
+            //Collisions test
+                collide(item) {
+                    return !(
+                        (this.x + this.width  < item.x)||
+                        (item.x + item.width  < this.x)||
+                        (this.y + this.height < item.y)||
+                        (item.y + item.height < this.y))
+                }
+        }
+    </details>
+                    </code>
+                </pre>
+            </div>
+        </div>
+        <script type="text/javascript" src="./js/jquery.js"></script>
+        <script type="text/javascript" src="./js/pixi.js"></script>
+        <script type="text/javascript" src="./../bin/lowlight.quadtree.min.js"></script>
+        <script type="text/javascript" src="./js/demo.js"></script>
+        <script src="js/highlight.pack.js"></script>
+        <script>hljs.initHighlightingOnLoad();</script>
+    </body>
+</html>

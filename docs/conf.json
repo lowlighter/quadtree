@@ -1,0 +1,5 @@
+{
+    "name": "Quadtree",
+    "plugins": ["./node_modules/jsdoc/templates/spotlight/plugins/categories"],
+    "categoryfile" : "../../../../../docs/categories.json"
+}

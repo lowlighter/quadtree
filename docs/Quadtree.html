@@ -1,0 +1,2408 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>Quadtree</title>
+
+    <link type="text/css" rel="stylesheet" href="css/atom-one-dark.css">
+    <link type="text/css" rel="stylesheet" href="css/styles.min.css">
+</head>
+
+<body>
+
+    <aside>
+        <header><h1>Quadtree</h1></header><ul><li><a href="index.html">Home page</a></li></ul><ul><li class="category">Structures</li><li id="menu-Quadtree"><a href="Quadtree.html">Quadtree</a></li></ul>
+    </aside>
+
+    <main>
+        <header>
+            <h1>Quadtree</h1>
+        </header>
+        <section>
+            
+
+
+
+        
+        <div class="main-description">
+            
+        </div>
+
+        
+        
+         
+
+<div class="members" id="member-Quadtree">
+    <header class="class">
+        
+        <h2 class="public">
+            Quadtree
+             <span class="signature"><span class="signature">(options)</span><span class="type-signature"></span></span> 
+        </h2>
+
+        
+        
+            <div class="sources">
+                 <a href="lowlight.quadtree.js.html">lowlight.quadtree.js (line 60)</a>
+            </div>
+        
+
+        
+        <div class="properties">
+            
+            
+            
+            
+            <label class="public">public</label>
+        </div>
+    </header>
+
+    
+    
+
+    
+    
+        <p><pre>Quadtree class.A quadtree is a tree data structure in which each internal node has exactly four children.</pre></p>
+    
+
+    
+    
+    <div class="card definition">
+        <ul>
+            
+            
+                <li>
+                    <h3>Arguments</h3>
+                    
+
+
+
+<table class="params">
+    
+
+<tr>
+    
+        <td>
+            options
+            
+        </td>
+    
+        <td>
+
+Object
+</td>
+    
+        <td>
+            Options
+            
+
+
+
+<table class="params">
+    
+
+<tr>
+    
+        <td>
+            x
+            
+                <br />
+                <span class="default-value">Default : 0</span>
+            
+        </td>
+    
+        <td>
+
+Number
+</td>
+    
+        <td>
+            X coordinate
+            
+        </td>
+    
+        <td>
+            
+            
+            <label class='optional'>Optional</label>
+        </td>
+</tr>
+
+
+<tr>
+    
+        <td>
+            y
+            
+                <br />
+                <span class="default-value">Default : 0</span>
+            
+        </td>
+    
+        <td>
+
+Number
+</td>
+    
+        <td>
+            Y coordinate
+            
+        </td>
+    
+        <td>
+            
+            
+            <label class='optional'>Optional</label>
+        </td>
+</tr>
+
+
+<tr>
+    
+        <td>
+            width
+            
+                <br />
+                <span class="default-value">Default : 0</span>
+            
+        </td>
+    
+        <td>
+
+Number
+</td>
+    
+        <td>
+            Width (<span class="bold">options.w</span> is also accepted)
+            
+        </td>
+    
+        <td>
+            
+            
+            <label class='optional'>Optional</label>
+        </td>
+</tr>
+
+
+<tr>
+    
+        <td>
+            height
+            
+                <br />
+                <span class="default-value">Default : 0</span>
+            
+        </td>
+    
+        <td>
+
+Number
+</td>
+    
+        <td>
+            Height (<span class="bold">options.h</span> is also accepted)
+            
+        </td>
+    
+        <td>
+            
+            
+            <label class='optional'>Optional</label>
+        </td>
+</tr>
+
+
+<tr>
+    
+        <td>
+            max_items
+            
+                <br />
+                <span class="default-value">Default : 0</span>
+            
+        </td>
+    
+        <td>
+
+Number
+</td>
+    
+        <td>
+            Max items per instance
+            
+        </td>
+    
+        <td>
+            
+            
+            <label class='optional'>Optional</label>
+        </td>
+</tr>
+
+
+<tr>
+    
+        <td>
+            max_depth
+            
+                <br />
+                <span class="default-value">Default : 0</span>
+            
+        </td>
+    
+        <td>
+
+Number
+</td>
+    
+        <td>
+            Max depth
+            
+        </td>
+    
+        <td>
+            
+            
+            <label class='optional'>Optional</label>
+        </td>
+</tr>
+
+</table>
+
+        </td>
+    
+        <td>
+            
+            
+            <label class='optional'>Optional</label>
+        </td>
+</tr>
+
+</table>
+
+                </li>
+            
+
+            
+            
+        </ul>
+    </div>
+    <br />
+    
+
+    
+    
+
+    
+    
+        
+
+<div class="card examples">
+    <ul>
+        
+        <li>
+             <h3>Basic usage</h3> 
+            <pre><code class="javascript">//Declare quadtreelet quadtree = new Lowlight.Quadtree({x:0, y:0, width:400, height:400})//Add some dataslet a = quadtree.add({x:20, y:20, width:10, height:10})let b = quadtree.add({x:70, y:120, width:10, height:15, ax:0.5, ay:0.5, mx:5, my:10})//Retrieve items in the same node as <span class="bold">a</span>quadtree.retrieve(a)//Update quadtreea.x += 10a.y += 10quadtree.rebuild()//Change quadtree configurationsquadtree.max_items = 10quadtree.max_depth = 4//Remove a nodequadtree.delete(a)//Remove all nodesquadtree.clear()</code></pre>
+        </li>
+        
+    </ul>
+</div>
+
+        <br />
+    
+
+    
+        
+
+
+
+</div>
+ 
+
+        
+        
+        
+
+        
+        
+        
+
+        
+        
+
+        
+
+        
+        
+        
+
+        
+        
+
+<div class="members" id="member-add">
+    <header class="function">
+        
+        <h2 class="public">
+            add
+             <span class="signature"><span class="signature">(item)</span><span class="type-signature"></span></span> 
+        </h2>
+
+        
+        
+            <div class="sources">
+                 <a href="lowlight.quadtree.js.html">lowlight.quadtree.js (line 177)</a>
+            </div>
+        
+
+        
+        <div class="properties">
+            
+            
+            
+            
+            <label class="public">public</label>
+        </div>
+    </header>
+
+    
+    
+
+    
+    
+        <p>Insert method.</p>
+    
+
+    
+    
+    <div class="card definition">
+        <ul>
+            
+            
+                <li>
+                    <h3>Arguments</h3>
+                    
+
+
+
+<table class="params">
+    
+
+<tr>
+    
+        <td>
+            item
+            
+        </td>
+    
+        <td>
+
+Object
+</td>
+    
+        <td>
+            Item to insert
+            
+
+
+
+<table class="params">
+    
+
+<tr>
+    
+        <td>
+            x
+            
+        </td>
+    
+        <td>
+
+Number
+</td>
+    
+        <td>
+            X coordinate
+            
+        </td>
+    
+        <td>
+            
+            
+            
+        </td>
+</tr>
+
+
+<tr>
+    
+        <td>
+            y
+            
+        </td>
+    
+        <td>
+
+Number
+</td>
+    
+        <td>
+            Y coordinate
+            
+        </td>
+    
+        <td>
+            
+            
+            
+        </td>
+</tr>
+
+
+<tr>
+    
+        <td>
+            width
+            
+        </td>
+    
+        <td>
+
+Number
+</td>
+    
+        <td>
+            Width (<span class="bold">item.w</span> is also accepted)
+            
+        </td>
+    
+        <td>
+            
+            
+            
+        </td>
+</tr>
+
+
+<tr>
+    
+        <td>
+            height
+            
+        </td>
+    
+        <td>
+
+Number
+</td>
+    
+        <td>
+            Height (<span class="bold">item.h</span> is also accepted)
+            
+        </td>
+    
+        <td>
+            
+            
+            
+        </td>
+</tr>
+
+
+<tr>
+    
+        <td>
+            ax
+            
+        </td>
+    
+        <td>
+
+Number
+</td>
+    
+        <td>
+            X anchor (value between 0 and 1)
+            
+        </td>
+    
+        <td>
+            
+            
+            <label class='optional'>Optional</label>
+        </td>
+</tr>
+
+
+<tr>
+    
+        <td>
+            ay
+            
+        </td>
+    
+        <td>
+
+Number
+</td>
+    
+        <td>
+            Y anchor (value between 0 and 1)
+            
+        </td>
+    
+        <td>
+            
+            
+            <label class='optional'>Optional</label>
+        </td>
+</tr>
+
+
+<tr>
+    
+        <td>
+            mx
+            
+        </td>
+    
+        <td>
+
+Number
+</td>
+    
+        <td>
+            X margin (will virtually increase width)
+            
+        </td>
+    
+        <td>
+            
+            
+            <label class='optional'>Optional</label>
+        </td>
+</tr>
+
+
+<tr>
+    
+        <td>
+            mx
+            
+        </td>
+    
+        <td>
+
+Number
+</td>
+    
+        <td>
+            Y margin (will virtually increase height)
+            
+        </td>
+    
+        <td>
+            
+            
+            <label class='optional'>Optional</label>
+        </td>
+</tr>
+
+</table>
+
+        </td>
+    
+        <td>
+            
+            
+            
+        </td>
+</tr>
+
+</table>
+
+                </li>
+            
+
+            
+            
+        </ul>
+    </div>
+    <br />
+    
+
+    
+    
+
+    
+    
+
+    
+        
+
+
+
+</div>
+ 
+
+<div class="members" id="member-clear">
+    <header class="function">
+        
+        <h2 class="public">
+            clear
+             <span class="signature"><span class="signature">(soft)</span><span class="type-signature"></span></span> 
+        </h2>
+
+        
+        
+            <div class="sources">
+                 <a href="lowlight.quadtree.js.html">lowlight.quadtree.js (line 157)</a>
+            </div>
+        
+
+        
+        <div class="properties">
+            
+            
+            
+            
+            <label class="public">public</label>
+        </div>
+    </header>
+
+    
+    
+
+    
+    
+        <p>Remove all items from instance.</p>
+    
+
+    
+    
+    <div class="card definition">
+        <ul>
+            
+            
+                <li>
+                    <h3>Arguments</h3>
+                    
+
+
+
+<table class="params">
+    
+
+<tr>
+    
+        <td>
+            soft
+            
+                <br />
+                <span class="default-value">Default : false</span>
+            
+        </td>
+    
+        <td>
+
+Boolean
+</td>
+    
+        <td>
+            If enabled, entries list won't be cleared (mainly used for rebuild)
+            
+        </td>
+    
+        <td>
+            
+            
+            <label class='optional'>Optional</label>
+        </td>
+</tr>
+
+</table>
+
+                </li>
+            
+
+            
+            
+        </ul>
+    </div>
+    <br />
+    
+
+    
+    
+
+    
+    
+
+    
+        
+
+
+
+</div>
+ 
+
+<div class="members" id="member-delete">
+    <header class="function">
+        
+        <h2 class="public">
+            delete
+             <span class="signature"><span class="signature">(item)</span><span class="type-signature"> &rarr; {Object}</span></span> 
+        </h2>
+
+        
+        
+            <div class="sources">
+                 <a href="lowlight.quadtree.js.html">lowlight.quadtree.js (line 193)</a>
+            </div>
+        
+
+        
+        <div class="properties">
+            
+            
+            
+            
+            <label class="public">public</label>
+        </div>
+    </header>
+
+    
+    
+
+    
+    
+        <p>Removal method.</p>
+    
+
+    
+    
+    <div class="card definition">
+        <ul>
+            
+            
+                <li>
+                    <h3>Arguments</h3>
+                    
+
+
+
+<table class="params">
+    
+
+<tr>
+    
+        <td>
+            item
+            
+        </td>
+    
+        <td>
+
+Object
+</td>
+    
+        <td>
+            Item to remove
+            
+        </td>
+    
+        <td>
+            
+            
+            
+        </td>
+</tr>
+
+</table>
+
+                </li>
+            
+
+            
+            
+                <li>
+                    <h3>Returns</h3>
+                    <table class="returns">
+                         
+
+<tr>
+    
+        <td></td>
+    
+        <td>
+
+Object
+</td>
+    
+        <td>Removed item</td>
+    
+        <td></td>
+</tr>
+ 
+                    </table>
+                </li>
+            
+        </ul>
+    </div>
+    <br />
+    
+
+    
+    
+
+    
+    
+
+    
+        
+
+
+
+</div>
+ 
+
+<div class="members" id="member-depth">
+    <header class="member">
+        
+        <h2 class="public">
+            depth<span class="signature"><span class="type-signature"> : Set</span></span>
+        </h2>
+
+        
+        
+            <div class="sources">
+                 <a href="lowlight.quadtree.js.html">lowlight.quadtree.js (line 125)</a>
+            </div>
+        
+
+        
+        <div class="properties">
+            <label class="readonly">Readonly</label></label></label>
+            
+             <label class="nullable">Nullable</label> 
+            <label class="public">Public</label>
+        </div>
+    </header>
+
+    
+    
+    
+        <p>Depth of current instance.</p>
+    
+
+    
+    
+
+    
+    
+
+    
+        
+
+
+
+</div>
+ 
+
+<div class="members" id="member-entries">
+    <header class="member">
+        
+        <h2 class="public">
+            entries<span class="signature"><span class="type-signature"> : Set</span></span>
+        </h2>
+
+        
+        
+            <div class="sources">
+                 <a href="lowlight.quadtree.js.html">lowlight.quadtree.js (line 104)</a>
+            </div>
+        
+
+        
+        <div class="properties">
+            <label class="readonly">Readonly</label></label></label>
+            
+            
+            <label class="public">Public</label>
+        </div>
+    </header>
+
+    
+    
+    
+        <p>Set of inserted items in instance and its children<div class="alert danger">Unlike other ES6 data structures, <span class="bold">Quadtree.entries</span> does <span class="bold">not</span> return an <span class="bold">Iterator [value, value]</span>.</div></p>
+    
+
+    
+    
+
+    
+    
+
+    
+        
+
+
+
+</div>
+ 
+
+<div class="members" id="member-forEach">
+    <header class="function">
+        
+        <h2 class="public">
+            forEach
+             <span class="signature"><span class="signature">(callback, thisArg)</span><span class="type-signature"></span></span> 
+        </h2>
+
+        
+        
+            <div class="sources">
+                 <a href="lowlight.quadtree.js.html">lowlight.quadtree.js (line 302)</a>
+            </div>
+        
+
+        
+        <div class="properties">
+            
+            
+            
+            
+            <label class="public">public</label>
+        </div>
+    </header>
+
+    
+    
+
+    
+    
+        <p>This method executes a provided function once for each value, in insertion order.</p>
+    
+
+    
+    
+    <div class="card definition">
+        <ul>
+            
+            
+                <li>
+                    <h3>Arguments</h3>
+                    
+
+
+
+<table class="params">
+    
+
+<tr>
+    
+        <td>
+            callback
+            
+        </td>
+    
+        <td>
+
+function
+</td>
+    
+        <td>
+            Callback function
+            
+        </td>
+    
+        <td>
+            
+            
+            
+        </td>
+</tr>
+
+
+<tr>
+    
+        <td>
+            thisArg
+            
+        </td>
+    
+        <td>
+
+Object
+</td>
+    
+        <td>
+            Value of this
+            
+        </td>
+    
+        <td>
+            
+            
+            <label class='optional'>Optional</label>
+        </td>
+</tr>
+
+</table>
+
+                </li>
+            
+
+            
+            
+        </ul>
+    </div>
+    <br />
+    
+
+    
+    
+
+    
+    
+
+    
+        
+
+
+
+</div>
+ 
+
+<div class="members" id="member-has">
+    <header class="function">
+        
+        <h2 class="public">
+            has
+             <span class="signature"><span class="signature">(item)</span><span class="type-signature"> &rarr; {Boolean}</span></span> 
+        </h2>
+
+        
+        
+            <div class="sources">
+                 <a href="lowlight.quadtree.js.html">lowlight.quadtree.js (line 309)</a>
+            </div>
+        
+
+        
+        <div class="properties">
+            
+            
+            
+            
+            <label class="public">public</label>
+        </div>
+    </header>
+
+    
+    
+
+    
+    
+        <p>Tell if an item belongs to instance</p>
+    
+
+    
+    
+    <div class="card definition">
+        <ul>
+            
+            
+                <li>
+                    <h3>Arguments</h3>
+                    
+
+
+
+<table class="params">
+    
+
+<tr>
+    
+        <td>
+            item
+            
+        </td>
+    
+        <td>
+
+Object
+</td>
+    
+        <td>
+            Item to test
+            
+        </td>
+    
+        <td>
+            
+            
+            
+        </td>
+</tr>
+
+</table>
+
+                </li>
+            
+
+            
+            
+                <li>
+                    <h3>Returns</h3>
+                    <table class="returns">
+                         
+
+<tr>
+    
+        <td></td>
+    
+        <td>
+
+Boolean
+</td>
+    
+        <td>True if <span class="bold">item</span> is found in quadtree</td>
+    
+        <td></td>
+</tr>
+ 
+                    </table>
+                </li>
+            
+        </ul>
+    </div>
+    <br />
+    
+
+    
+    
+
+    
+    
+
+    
+        
+
+
+
+</div>
+ 
+
+<div class="members" id="member-height">
+    <header class="member">
+        
+        <h2 class="public">
+            height<span class="signature"><span class="type-signature"> : Number</span></span>
+        </h2>
+
+        
+        
+            <div class="sources">
+                 <a href="lowlight.quadtree.js.html">lowlight.quadtree.js (line 87)</a>
+            </div>
+        
+
+        
+        <div class="properties">
+            <label class="readonly">Readonly</label></label></label>
+            
+            
+            <label class="public">Public</label>
+        </div>
+    </header>
+
+    
+    
+    
+        <p>Height.</p>
+    
+
+    
+    
+
+    
+    
+
+    
+        
+
+
+
+</div>
+ 
+
+<div class="members" id="member-index">
+    <header class="function">
+        
+        <h2 class="protected">
+            index
+             <span class="signature"><span class="signature">(item)</span><span class="type-signature"> &rarr; {Array.&lt;Number>}</span></span> 
+        </h2>
+
+        
+        
+            <div class="sources">
+                 <a href="lowlight.quadtree.js.html">lowlight.quadtree.js (line 260)</a>
+            </div>
+        
+
+        
+        <div class="properties">
+            
+            
+            
+            
+            <label class="protected">protected</label>
+        </div>
+    </header>
+
+    
+    
+
+    
+    
+        <p>Tell in which node an item should belongs.<div class="alert info">If an item doesn't fit completly in a node, its reference will be duplicated in node's children.</div></p>
+    
+
+    
+    
+    <div class="card definition">
+        <ul>
+            
+            
+                <li>
+                    <h3>Arguments</h3>
+                    
+
+
+
+<table class="params">
+    
+
+<tr>
+    
+        <td>
+            item
+            
+        </td>
+    
+        <td>
+
+Object
+</td>
+    
+        <td>
+            Item
+            
+
+
+
+<table class="params">
+    
+
+<tr>
+    
+        <td>
+            ax
+            
+        </td>
+    
+        <td>
+
+Number
+</td>
+    
+        <td>
+            X anchor (value between 0 and 1)
+            
+        </td>
+    
+        <td>
+            
+            
+            <label class='optional'>Optional</label>
+        </td>
+</tr>
+
+
+<tr>
+    
+        <td>
+            ay
+            
+        </td>
+    
+        <td>
+
+Number
+</td>
+    
+        <td>
+            Y anchor (value between 0 and 1)
+            
+        </td>
+    
+        <td>
+            
+            
+            <label class='optional'>Optional</label>
+        </td>
+</tr>
+
+
+<tr>
+    
+        <td>
+            mx
+            
+        </td>
+    
+        <td>
+
+Number
+</td>
+    
+        <td>
+            X margin (will virtually increase width)
+            
+        </td>
+    
+        <td>
+            
+            
+            <label class='optional'>Optional</label>
+        </td>
+</tr>
+
+
+<tr>
+    
+        <td>
+            mx
+            
+        </td>
+    
+        <td>
+
+Number
+</td>
+    
+        <td>
+            Y margin (will virtually increase height)
+            
+        </td>
+    
+        <td>
+            
+            
+            <label class='optional'>Optional</label>
+        </td>
+</tr>
+
+</table>
+
+        </td>
+    
+        <td>
+            
+            
+            
+        </td>
+</tr>
+
+</table>
+
+                </li>
+            
+
+            
+            
+                <li>
+                    <h3>Returns</h3>
+                    <table class="returns">
+                         
+
+<tr>
+    
+        <td></td>
+    
+        <td>
+
+Array.&lt;Number>
+</td>
+    
+        <td>Indexes where item should be added</td>
+    
+        <td></td>
+</tr>
+ 
+                    </table>
+                </li>
+            
+        </ul>
+    </div>
+    <br />
+    
+
+    
+    
+
+    
+    
+
+    
+        
+
+
+
+</div>
+ 
+
+<div class="members" id="member-items">
+    <header class="member">
+        
+        <h2 class="public">
+            items<span class="signature"><span class="type-signature"> : Set</span></span>
+        </h2>
+
+        
+        
+            <div class="sources">
+                 <a href="lowlight.quadtree.js.html">lowlight.quadtree.js (line 94)</a>
+            </div>
+        
+
+        
+        <div class="properties">
+            <label class="readonly">Readonly</label></label></label>
+            
+            
+            <label class="public">Public</label>
+        </div>
+    </header>
+
+    
+    
+    
+        <p>Set of inserted items in instance</p>
+    
+
+    
+    
+
+    
+    
+
+    
+        
+
+
+
+</div>
+ 
+
+<div class="members" id="member-keys">
+    <header class="function">
+        
+        <h2 class="public">
+            keys
+             <span class="signature"><span class="signature">()</span><span class="type-signature"> &rarr; {Iterator}</span></span> 
+        </h2>
+
+        
+        
+            <div class="sources">
+                 <a href="lowlight.quadtree.js.html">lowlight.quadtree.js (line 321)</a>
+            </div>
+        
+
+        
+        <div class="properties">
+            
+            
+            
+            
+            <label class="public">public</label>
+        </div>
+    </header>
+
+    
+    
+
+    
+    
+        <p>Return an Iterator which contains all values contained in Quadtree, in insertion order.</p>
+    
+
+    
+    
+    <div class="card definition">
+        <ul>
+            
+            
+
+            
+            
+                <li>
+                    <h3>Returns</h3>
+                    <table class="returns">
+                         
+
+<tr>
+    
+        <td></td>
+    
+        <td>
+
+Iterator
+</td>
+    
+        <td>Inserted items in instance</td>
+    
+        <td></td>
+</tr>
+ 
+                    </table>
+                </li>
+            
+        </ul>
+    </div>
+    <br />
+    
+
+    
+    
+
+    
+    
+
+    
+        
+
+
+
+</div>
+ 
+
+<div class="members" id="member-leaf">
+    <header class="member">
+        
+        <h2 class="public">
+            leaf<span class="signature"><span class="type-signature"> : Boolean</span></span>
+        </h2>
+
+        
+        
+            <div class="sources">
+                 <a href="lowlight.quadtree.js.html">lowlight.quadtree.js (line 280)</a>
+            </div>
+        
+
+        
+        <div class="properties">
+            <label class="readonly">Readonly</label></label></label>
+            
+            
+            <label class="public">Public</label>
+        </div>
+    </header>
+
+    
+    
+    
+        <p>Tell if instance is a leaf (has no children).</p>
+    
+
+    
+    
+
+    
+    
+
+    
+        
+
+
+
+</div>
+ 
+
+<div class="members" id="member-max_depth">
+    <header class="member">
+        
+        <h2 class="public">
+            max_depth<span class="signature"><span class="type-signature"> : Number</span></span>
+        </h2>
+
+        
+        
+            <div class="sources">
+                 <a href="lowlight.quadtree.js.html">lowlight.quadtree.js (line 150)</a>
+            </div>
+        
+
+        
+        <div class="properties">
+            
+            
+            
+            <label class="public">Public</label>
+        </div>
+    </header>
+
+    
+    
+    
+        <p><pre>Max depth of quadtree.Updating this property through root instance will update all child instances.</pre></p>
+    
+
+    
+    
+
+    
+    
+
+    
+        
+
+
+
+</div>
+ 
+
+<div class="members" id="member-max_items">
+    <header class="member">
+        
+        <h2 class="public">
+            max_items<span class="signature"><span class="type-signature"> : Number</span></span>
+        </h2>
+
+        
+        
+            <div class="sources">
+                 <a href="lowlight.quadtree.js.html">lowlight.quadtree.js (line 140)</a>
+            </div>
+        
+
+        
+        <div class="properties">
+            
+            
+            
+            <label class="public">Public</label>
+        </div>
+    </header>
+
+    
+    
+    
+        <p><pre>Max items per instance.If there are more item in an instance, it will be splitted (if max depth isn't reached).Updating this property through root instance will update all child instances.</pre></p>
+    
+
+    
+    
+
+    
+    
+
+    
+        
+
+
+
+</div>
+ 
+
+<div class="members" id="member-nodes">
+    <header class="member">
+        
+        <h2 class="public">
+            nodes<span class="signature"><span class="type-signature"> : Set</span></span>
+        </h2>
+
+        
+        
+            <div class="sources">
+                 <a href="lowlight.quadtree.js.html">lowlight.quadtree.js (line 118)</a>
+            </div>
+        
+
+        
+        <div class="properties">
+            <label class="readonly">Readonly</label></label></label>
+            
+             <label class="nullable">Nullable</label> 
+            <label class="public">Public</label>
+        </div>
+    </header>
+
+    
+    
+    
+        <p>References to child instances.</p>
+    
+
+    
+    
+
+    
+    
+
+    
+        
+
+
+
+</div>
+ 
+
+<div class="members" id="member-parent">
+    <header class="member">
+        
+        <h2 class="public">
+            parent<span class="signature"><span class="type-signature"> : Set</span></span>
+        </h2>
+
+        
+        
+            <div class="sources">
+                 <a href="lowlight.quadtree.js.html">lowlight.quadtree.js (line 111)</a>
+            </div>
+        
+
+        
+        <div class="properties">
+            <label class="readonly">Readonly</label></label></label>
+            
+             <label class="nullable">Nullable</label> 
+            <label class="public">Public</label>
+        </div>
+    </header>
+
+    
+    
+    
+        <p>Reference to parent instance.</p>
+    
+
+    
+    
+
+    
+    
+
+    
+        
+
+
+
+</div>
+ 
+
+<div class="members" id="member-rebuild">
+    <header class="function">
+        
+        <h2 class="public">
+            rebuild
+             <span class="signature"><span class="signature">()</span><span class="type-signature"> &rarr; {<a href="Quadtree.html">Quadtree</a>}</span></span> 
+        </h2>
+
+        
+        
+            <div class="sources">
+                 <a href="lowlight.quadtree.js.html">lowlight.quadtree.js (line 222)</a>
+            </div>
+        
+
+        
+        <div class="properties">
+            
+            
+            
+            
+            <label class="public">public</label>
+        </div>
+    </header>
+
+    
+    
+
+    
+    
+        <p>Rebuild current instance.</p>
+    
+
+    
+    
+    <div class="card definition">
+        <ul>
+            
+            
+
+            
+            
+                <li>
+                    <h3>Returns</h3>
+                    <table class="returns">
+                         
+
+<tr>
+    
+        <td></td>
+    
+        <td>
+
+<a href="Quadtree.html">Quadtree</a>
+</td>
+    
+        <td>Current instance</td>
+    
+        <td></td>
+</tr>
+ 
+                    </table>
+                </li>
+            
+        </ul>
+    </div>
+    <br />
+    
+
+    
+    
+
+    
+    
+
+    
+        
+
+
+
+</div>
+ 
+
+<div class="members" id="member-retrieve">
+    <header class="function">
+        
+        <h2 class="public">
+            retrieve
+             <span class="signature"><span class="signature">(item, list)</span><span class="type-signature"> &rarr; {Set}</span></span> 
+        </h2>
+
+        
+        
+            <div class="sources">
+                 <a href="lowlight.quadtree.js.html">lowlight.quadtree.js (line 210)</a>
+            </div>
+        
+
+        
+        <div class="properties">
+            
+            
+            
+            
+            <label class="public">public</label>
+        </div>
+    </header>
+
+    
+    
+
+    
+    
+        <p>Retrieve items closed to <span class="bold">item</span> given in argument.<div class="alert warning"><span class="bold">list</span> argument is reserved for recursive usage of this method.</div></p>
+    
+
+    
+    
+    <div class="card definition">
+        <ul>
+            
+            
+                <li>
+                    <h3>Arguments</h3>
+                    
+
+
+
+<table class="params">
+    
+
+<tr>
+    
+        <td>
+            item
+            
+        </td>
+    
+        <td>
+
+Object
+</td>
+    
+        <td>
+            Item to test
+            
+        </td>
+    
+        <td>
+            
+            
+            
+        </td>
+</tr>
+
+
+<tr>
+    
+        <td>
+            list
+            
+        </td>
+    
+        <td>
+
+Set
+</td>
+    
+        <td>
+            Reference to current list
+            
+        </td>
+    
+        <td>
+            
+            
+            <label class='optional'>Optional</label>
+        </td>
+</tr>
+
+</table>
+
+                </li>
+            
+
+            
+            
+                <li>
+                    <h3>Returns</h3>
+                    <table class="returns">
+                         
+
+<tr>
+    
+        <td></td>
+    
+        <td>
+
+Set
+</td>
+    
+        <td>Set of items which could potentially collide with item</td>
+    
+        <td></td>
+</tr>
+ 
+                    </table>
+                </li>
+            
+        </ul>
+    </div>
+    <br />
+    
+
+    
+    
+
+    
+    
+
+    
+        
+
+
+
+</div>
+ 
+
+<div class="members" id="member-root">
+    <header class="member">
+        
+        <h2 class="public">
+            root<span class="signature"><span class="type-signature"> : Boolean</span></span>
+        </h2>
+
+        
+        
+            <div class="sources">
+                 <a href="lowlight.quadtree.js.html">lowlight.quadtree.js (line 288)</a>
+            </div>
+        
+
+        
+        <div class="properties">
+            <label class="readonly">Readonly</label></label></label>
+            
+            
+            <label class="public">Public</label>
+        </div>
+    </header>
+
+    
+    
+    
+        <p>Tell if instance is Quadtree's root.</p>
+    
+
+    
+    
+
+    
+    
+
+    
+        
+
+
+
+</div>
+ 
+
+<div class="members" id="member-size">
+    <header class="member">
+        
+        <h2 class="public">
+            size<span class="signature"><span class="type-signature"> : Number</span></span>
+        </h2>
+
+        
+        
+            <div class="sources">
+                 <a href="lowlight.quadtree.js.html">lowlight.quadtree.js (line 295)</a>
+            </div>
+        
+
+        
+        <div class="properties">
+            
+            
+            
+            <label class="public">Public</label>
+        </div>
+    </header>
+
+    
+    
+    
+        <p>Quadtree size (number of entries).</p>
+    
+
+    
+    
+
+    
+    
+
+    
+        
+
+
+
+</div>
+ 
+
+<div class="members" id="member-split">
+    <header class="function">
+        
+        <h2 class="protected">
+            split
+             <span class="signature"><span class="signature">()</span><span class="type-signature"></span></span> 
+        </h2>
+
+        
+        
+            <div class="sources">
+                 <a href="lowlight.quadtree.js.html">lowlight.quadtree.js (line 234)</a>
+            </div>
+        
+
+        
+        <div class="properties">
+            
+            
+            
+            
+            <label class="protected">protected</label>
+        </div>
+    </header>
+
+    
+    
+
+    
+    
+        <p><pre>Split instance in four child instances.Rearrange items to fulfill item capacity constraints.</pre></p>
+    
+
+    
+    
+
+    
+    
+
+    
+    
+
+    
+        
+
+
+
+</div>
+ 
+
+<div class="members" id="member-values">
+    <header class="function">
+        
+        <h2 class="public">
+            values
+             <span class="signature"><span class="signature">()</span><span class="type-signature"> &rarr; {Iterator}</span></span> 
+        </h2>
+
+        
+        
+            <div class="sources">
+                 <a href="lowlight.quadtree.js.html">lowlight.quadtree.js (line 315)</a>
+            </div>
+        
+
+        
+        <div class="properties">
+            
+            
+            
+            
+            <label class="public">public</label>
+        </div>
+    </header>
+
+    
+    
+
+    
+    
+        <p>Return an Iterator which contains all values contained in Quadtree, in insertion order.</p>
+    
+
+    
+    
+    <div class="card definition">
+        <ul>
+            
+            
+
+            
+            
+                <li>
+                    <h3>Returns</h3>
+                    <table class="returns">
+                         
+
+<tr>
+    
+        <td></td>
+    
+        <td>
+
+Iterator
+</td>
+    
+        <td>Inserted items in instance</td>
+    
+        <td></td>
+</tr>
+ 
+                    </table>
+                </li>
+            
+        </ul>
+    </div>
+    <br />
+    
+
+    
+    
+
+    
+    
+
+    
+        
+
+
+
+</div>
+ 
+
+<div class="members" id="member-width">
+    <header class="member">
+        
+        <h2 class="public">
+            width<span class="signature"><span class="type-signature"> : Number</span></span>
+        </h2>
+
+        
+        
+            <div class="sources">
+                 <a href="lowlight.quadtree.js.html">lowlight.quadtree.js (line 80)</a>
+            </div>
+        
+
+        
+        <div class="properties">
+            <label class="readonly">Readonly</label></label></label>
+            
+            
+            <label class="public">Public</label>
+        </div>
+    </header>
+
+    
+    
+    
+        <p>Width.</p>
+    
+
+    
+    
+
+    
+    
+
+    
+        
+
+
+
+</div>
+ 
+
+<div class="members" id="member-x">
+    <header class="member">
+        
+        <h2 class="public">
+            x<span class="signature"><span class="type-signature"> : Number</span></span>
+        </h2>
+
+        
+        
+            <div class="sources">
+                 <a href="lowlight.quadtree.js.html">lowlight.quadtree.js (line 66)</a>
+            </div>
+        
+
+        
+        <div class="properties">
+            <label class="readonly">Readonly</label></label></label>
+            
+            
+            <label class="public">Public</label>
+        </div>
+    </header>
+
+    
+    
+    
+        <p>X coordinate.</p>
+    
+
+    
+    
+
+    
+    
+
+    
+        
+
+
+
+</div>
+ 
+
+<div class="members" id="member-y">
+    <header class="member">
+        
+        <h2 class="public">
+            y<span class="signature"><span class="type-signature"> : Number</span></span>
+        </h2>
+
+        
+        
+            <div class="sources">
+                 <a href="lowlight.quadtree.js.html">lowlight.quadtree.js (line 73)</a>
+            </div>
+        
+
+        
+        <div class="properties">
+            <label class="readonly">Readonly</label></label></label>
+            
+            
+            <label class="public">Public</label>
+        </div>
+    </header>
+
+    
+    
+    
+        <p>Y coordinate.</p>
+    
+
+    
+    
+
+    
+    
+
+    
+        
+
+
+
+</div>
+
+
+
+        
+        
+        
+
+        
+        
+        
+
+
+        </section>
+        <footer>
+            Generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.3</a> on Fri Jul 07 2017 14:34:52 GMT+0200 (Paris, Madrid (heure d’été))
+            <br />
+            Embellished by <a href="https://github.com/lowlighter/jsdoc-spotlight">Spotlight</a> theme
+        </footer>
+    </main>
+
+    <script src="js/jquery-3.1.1.min.js"></script>
+    <script src="js/scripts.min.js"></script>
+    <script src="js/highlight.pack.js"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+</body>
+</html>
