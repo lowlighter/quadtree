@@ -18,11 +18,17 @@
     "build": "node ./src/build.js"
   },
   "config": {
+    "project_name": "Quadtree library",
+    "project_repo": "https://github.com/lowlighter/quadtree",
+    "project_docs": "https://lowlighter.github.io/quadtree/docs",
+    "project_page": "https://lowlight.fr/en/blog/quadtree/",
     "source": "./lowlight.quadtree.js",
     "output": "./../bin/lowlight.quadtree.js",
     "jsdoc_source": "../../../bin/lowlight.quadtree.js",
     "jsdoc_output": "../../../docs",
     "jsdoc_config": "./../../conf.json",
-    "jsdoc_readme": "../../../README.md"
+    "jsdoc_readme": "../../../README.md",
+    "demo_template": "./demo/template.html",
+    "demo_output": "./demo/index.html"
   }
 }
