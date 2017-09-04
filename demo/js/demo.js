@@ -1,7 +1,7 @@
 $(function () {
     //Create PIXI View
         let app = new PIXI.Application(400, 400, {transparent:true})
-        $(".pixi-view").append(app.view)
+        $(".app-view").append(app.view)
 
     //Layers
         let nodes = app.stage.addChild(new PIXI.ParticleContainer())
@@ -146,26 +146,6 @@ $(function () {
                 get state() { return 0 }
         }
 
-    //keyboard controls
-        $("[name='controls']").click(function () { $(this).prop("disabled", true).text("Enabled !") ; $("[name='keyboard']").focus() })
-        $("[name='keyboard']").keydown(function (event) {
-            switch (event.key) {
-                case 'z': case 'w': key.z = true; event.preventDefault(); break;
-                case 'q': case 'a': key.q = true; event.preventDefault(); break;
-                case 's': key.s = true; event.preventDefault(); break;
-                case 'd': key.d = true; event.preventDefault(); break;
-                case "Shift": key.shift = true; event.preventDefault(); break;
-            }
-        }).keyup(function (event) {
-            switch (event.key) {
-                case 'z': case 'w': key.z = false; event.preventDefault(); break;
-                case 'q': case 'a': key.q = false; event.preventDefault(); break;
-                case 's': key.s = false; event.preventDefault(); break;
-                case 'd': key.d = false; event.preventDefault(); break;
-                case "Shift": key.shift = false; event.preventDefault(); break;
-            }
-        }).focusout(function () { $("[name='controls']").prop("disabled", false).text("Enable") })
-
     //Update function
         function update() {
             //Update
@@ -173,12 +153,13 @@ $(function () {
             //Collisions states
                 quadtree.rebuild()
                 quadtree.render()
-                let list = quadtree.retrieve(player)
-                list.forEach(item => { item.state = player.collide(item) ? 2 : 1 })
+                let list = quadtree.retrieve(player), collide = 0
+                list.forEach(item => { item.state = player.collide(item) ? (++collide, 2) : 1 })
             //Render and coputations
                 $(".code-particles *").text(quadtree.entries.size)
+                $(".particles-collisions *").text(collide)
                 $(".particles-numbers").val(quadtree.entries.size)
-                $(".particles-tested").val(list.size)
+                $(".particles-tested").val(collide ? `${list.size} (dont ${collide} collision${collide > 1 ? "s" : ""})` : list.size)
         }
 
     //Demo function
@@ -221,10 +202,32 @@ $(function () {
             clear.call(this, soft)
         }
 
-    //Interactivity
-        $('[name="items"]').on("change", function () { quadtree.max_items = $(this).val() ; $(".code-items").find("*").text($('[name="items"]').val()) })
-        $('[name="depth"]').on("change", function () { quadtree.max_depth = $(this).val() ; $(".code-depth").find("*").text($('[name="depth"]').val()) })
-        $('[name^="pattern-"]').on("change", function () { ennemy.patterns[$(this).attr("name").match(/pattern-(.*)/)[1]] = $(this).val() === "1" })
+    //Controls
+        function controller() {
+            //keyboard controls
+                $("[name='controls']").click(function () { $(this).prop("disabled", true).text($(".text-keyboard").text()) ; $("[name='keyboard']").focus() })
+                $("[name='keyboard']").keydown(function (event) {
+                    switch (event.key) {
+                        case 'z': case 'w': key.z = true; event.preventDefault(); break;
+                        case 'q': case 'a': key.q = true; event.preventDefault(); break;
+                        case 's': key.s = true; event.preventDefault(); break;
+                        case 'd': key.d = true; event.preventDefault(); break;
+                        case "Shift": key.shift = true; event.preventDefault(); break;
+                    }
+                }).keyup(function (event) {
+                    switch (event.key) {
+                        case 'z': case 'w': key.z = false; event.preventDefault(); break;
+                        case 'q': case 'a': key.q = false; event.preventDefault(); break;
+                        case 's': key.s = false; event.preventDefault(); break;
+                        case 'd': key.d = false; event.preventDefault(); break;
+                        case "Shift": key.shift = false; event.preventDefault(); break;
+                    }
+                }).focusout(function () { $("[name='controls']").prop("disabled", false).text("Enable") })
+            //Interactivity
+                $('[name="items"]').on("change", function () { quadtree.max_items = $(this).val() ; $(".code-items").find("*").text($('[name="items"]').val()) })
+                $('[name="depth"]').on("change", function () { quadtree.max_depth = $(this).val() ; $(".code-depth").find("*").text($('[name="depth"]').val()) })
+                $('[name^="pattern-"]').on("change", function () { ennemy.patterns[$(this).attr("name").match(/pattern-(.*)/)[1]] = $(this).val() === "1" })
+        }
 
     //Load textures
         PIXI.loader.onError.add(() => $(".cross-origin-error").show())
@@ -232,6 +235,7 @@ $(function () {
             //Initalization
                 player = new Playable(app.view.width/2, app.view.height-50)
                 ennemy = new Ennemy(app.view.width/2, 50)
+                controller()
                 demo(true)
                 app.ticker.add(update)
         })

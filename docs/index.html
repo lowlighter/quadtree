@@ -44,6 +44,7 @@
 <ul>
 <li><a href="https://lowlighter.github.io/quadtree/demo/">Live demo</a></li>
 <li><a href="https://lowlighter.github.io/quadtree/docs/">Documentation</a></li>
+<li><a href="https://lowlight.fr/en/blog/quadtree-library/">About</a></li>
 </ul>
 <h1>Features</h1><ul>
 <li><strong>Light weight</strong> libray</li>
@@ -51,27 +52,33 @@
 <li><strong>Respect ES6</strong> data structures prototype (add, delete, clear, has, forEach, ...)</li>
 <li>Support <strong>all</strong> object types</li>
 </ul>
-<h2>Getting Started</h2><p>First of all, you need to include the library :</p>
-<pre class="prettyprint source lang-html"><code>    &lt;script src=&quot;./bin/lowlight.quadtree.js&quot;>&lt;/script></code></pre><p>Then you may want create an alias for convenience :</p>
-<pre class="prettyprint source lang-javascript"><code>    let Quadtree = Lowlight.Quadtree</code></pre><h2>Create a quadtree</h2><p>You can create a new quadtree this way :</p>
-<pre class="prettyprint source lang-javascript"><code>    let quadtree = new Quadtree({width:400, height:400})</code></pre><h3>Configuring quadtree</h3><p>You can change at any time the maximum capacity for each node (<strong>max_items</strong>) before subdividing and the max depth (<strong>max_depth</strong>) of quadtree instance.</p>
-<p>This may need a rebuild afterwards.</p>
+<h2>Getting Started</h2><p>First of all, you'll need to include the library :</p>
+<pre class="prettyprint source lang-html"><code>    &lt;script src=&quot;./bin/lowlight.quadtree.js&quot;>&lt;/script></code></pre><p>You may include the minified library instead :</p>
+<pre class="prettyprint source lang-html"><code>    &lt;script src=&quot;./bin/lowlight.quadtree.min.js&quot;>&lt;/script></code></pre><p>Then you may create alias for convenience :</p>
+<pre class="prettyprint source lang-javascript"><code>    let Quadtree = Lowlight.Quadtree</code></pre><h2>Create a new quadtree</h2><p>You can create a new quadtree this way :</p>
+<pre class="prettyprint source lang-javascript"><code>    let quadtree = new Quadtree({width:400, height:400})</code></pre><p>You configure at anytime <code>quadtree.max_items</code> <em>(number of items before subdividing)</em> and <code>quadtree.max_depth</code> <em>(maximum depth of quadtree instance)</em>.
+You may need to use <code>quadtree.rebuild()</code> method afterwards.</p>
 <pre class="prettyprint source lang-javascript"><code>    quadtree.max_items = 4
-    quadtree.max_depth = 7</code></pre><h2>Managing data</h2><h3>Add some datas</h3><p>You can add any types of data in your quadtree.
-The only requirement are the <strong>x</strong>, <strong>y</strong>, <strong>width</strong> (or <strong>w</strong>) and <strong>height</strong> (or <strong>h</strong>) properties.</p>
-<pre class="prettyprint source lang-javascript"><code>    let a = quadtree.add({x:20, y:20, width:10, height:10})</code></pre><h4>Special properties</h4><p><strong>ax</strong> and <strong>ay</strong> (values between 0 and 1) are used to change anchor point.
-This is the point used for calculations. [0;0] is default and means that anchor is Top-Left whereas [1;1] means Bottom-Right.
-You may prefer to use the middle of your shape by choosing [0.5;0.5] as anchor point.</p>
-<p><strong>mx</strong> and <strong>my</strong> are used to add margins to both sides to virtually increase width and height.</p>
-<pre class="prettyprint source lang-javascript"><code>    let b = quadtree.add({x:70, y:120, w:10, h:15, ax:0.5, ay:0.5, mx:5, my:10})</code></pre><h3>Remove data</h3><p>You can remove a single node this way :</p>
-<pre class="prettyprint source lang-javascript"><code>    quadtree.delete(a)</code></pre><p>And clear entirely the quadtree with this :</p>
-<pre class="prettyprint source lang-javascript"><code>    quadtree.clear()</code></pre><h3>Update data</h3><p>After updating an item from your quadtree, you may need to rebuild it.
-Note that this operation is quite expensive.</p>
-<pre class="prettyprint source lang-javascript"><code>    quadtree.rebuild()</code></pre><p>It can be called from sub-quadtrees instance to rebuild only a part of quadtree</p>
-<pre class="prettyprint source lang-javascript"><code>    quadtree.nodes[0].rebuild()</code></pre><h2>Retrieve items in the same node</h2><p>You can retrieve all the items in the same node of another item with <strong>retrieve(item)</strong> method.
-It returns a <strong>Set</strong> of items.</p>
+    quadtree.max_depth = 7</code></pre><h2>Manage data</h2><h3>Insertions</h3><p>You can add any type of object in a quadtree, however it must have at least the following properties :
+<code>x</code>, <code>y</code>, <code>width</code> (or <code>w</code>) and <code>height</code> (or <code>h</code>).</p>
+<p>Then, just call <code>quadtree.add(item)</code> to add an item to the quadtree.</p>
+<p>For example :</p>
+<pre class="prettyprint source lang-javascript"><code>    //Regular insertion
+        let a = quadtree.add({x:20, y:20, width:10, height:10})
+    //Full-specified insertion
+        let b = quadtree.add({x:70, y:120, w:10, h:15, ax:0.5, ay:0.5, mx:5, my:10})</code></pre><h4>Anchors</h4><p>By default, the point used for calculations is the top-left corner <em>(0;0)</em>.
+You can move it for each object by setting <code>ax</code> and <code>ay</code> properties <em>(values must be between 0 and 1)</em>.
+This means that <em>(0.5;0.5)</em> will use the center of the rectangle for calculations wheras <em>(1;1)</em> will use the bottom-right point instead.</p>
+<h4>Margins</h4><p>You can also add margins to both sides to virtually increase width and height by setting <code>mx</code> and <code>my</code> properties.</p>
+<h4>Retrieve close items</h4><p>To retrieve all items contained in the same node of a specific item, call the <code>quadtree.retrieve(item)</code> method.
+This will return a <code>Set</code> without the given node.</p>
 <pre class="prettyprint source lang-javascript"><code>    let tests = quadtree.retrieve(a)
-    tests.forEach(item => console.log(a.collide(item) ? &quot;Collision&quot; : &quot;Nothing&quot;))</code></pre><h2>Project content</h2><table>
+    tests.forEach(item => console.log(a.collide(item) ? &quot;Collision&quot; : &quot;Nothing&quot;))</code></pre><h3>Updates</h3><p>Updating the location or the dimensions of an item already in your quadtree will require that you rebuild quadtree manually.
+This operation is quite expensive.</p>
+<pre class="prettyprint source lang-javascript"><code>    quadtree.rebuild()</code></pre><p>You can call it this method from a quadtree's nodes to rebuild only a part of it.</p>
+<pre class="prettyprint source lang-javascript"><code>    quadtree.nodes[0].rebuild()</code></pre><h3>Deletion</h3><p>You can remove a single item from the quadtree just be calling <code>quadtree.delete(item)</code> method.</p>
+<pre class="prettyprint source lang-javascript"><code>    quadtree.delete(a)</code></pre><p>To clear entirely the quadtree, just call <code>quadtree.clear()</code> method.</p>
+<pre class="prettyprint source lang-javascript"><code>    quadtree.clear()</code></pre><h2>Project content</h2><table>
 <thead>
 <tr>
 <th></th>
@@ -81,7 +88,7 @@ It returns a <strong>Set</strong> of items.</p>
 <tbody>
 <tr>
 <td><strong>/bin</strong></td>
-<td>Production and test files</td>
+<td>Live and dev scrripts files</td>
 </tr>
 <tr>
 <td><strong>/src</strong></td>
@@ -93,15 +100,22 @@ It returns a <strong>Set</strong> of items.</p>
 </tr>
 <tr>
 <td><strong>/docs</strong></td>
-<td>Library's documentations</td>
+<td>Documentation</td>
 </tr>
 </tbody>
 </table>
-<h3>Rebuild project</h3><p>If you need to rebuild project, just run the following command :</p>
-<pre class="prettyprint source"><code>npm run build
-# /bin will be updated with /src scripts files
-# /docs will be updated</code></pre><p>Don't forget to install dependencies before running the previous command.</p>
-<pre class="prettyprint source"><code>npm install</code></pre><h2>License</h2><p>This project is licensed under the MIT License. See <a href="https://github.com/lowlighter/quadtree/blob/master/LICENSE.md">LICENSE.md</a> file for details.</p>
+<h2>Rebuild project and expanding the library</h2><p>You'll need to run the following command the first time to install dependencies.</p>
+<pre class="prettyprint source lang-shell"><code>npm install</code></pre><p>Then to rebuild project, just run the following command :</p>
+<pre class="prettyprint source lang-shell"><code>npm run build</code></pre><p>This will update <code>/bin</code> files with included <code>/src</code> files.
+Although <code>package.json</code> (which contains <code>&quot;source&quot; and &quot;output&quot;</code> paths) are preconfigured, you may need to reconfigure them if you're planning to expand this library.</p>
+<p>To include a file just use the following syntax in the <code>&quot;source&quot;</code> file :</p>
+<pre class="prettyprint source lang-javascript"><code>    /* #include &lt;path/to/file.js> */</code></pre><ul>
+<li>File minification is performed with <a href="https://github.com/babel/minify">Babel minify</a>.</li>
+<li>Documentation is generated with <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3</a>.</li>
+</ul>
+<p>Although <code>package.json</code> (which contains <code>&quot;jsdoc_source&quot;, &quot;jsdoc_output&quot;, &quot;jsdoc_config&quot; and &quot;jsdoc_readme&quot;</code>) and <code>docs/categories.json</code> are preconfigured, you may need to reconfigure them if you're planning to expand this library.</p>
+<h2>License</h2><p>This project is licensed under the MIT License.</p>
+<p>See <a href="https://github.com/lowlighter/quadtree/blob/master/LICENSE.md">LICENSE.md</a> file for details.</p>
         </div>
     </section>
 
@@ -109,7 +123,7 @@ It returns a <strong>Set</strong> of items.</p>
 
         </section>
         <footer>
-            Generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.3</a> on Fri Jul 07 2017 14:34:52 GMT+0200 (Paris, Madrid (heure d’été))
+            Generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.3</a> on Mon Sep 04 2017 19:02:07 GMT+0200 (Paris, Madrid (heure d’été))
             <br />
             Embellished by <a href="https://github.com/lowlighter/jsdoc-spotlight">Spotlight</a> theme
         </footer>
