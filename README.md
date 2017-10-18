@@ -5,6 +5,7 @@ This library is an implementation in JavaScript of **Quadtrees** structures.
 * [Documentation](https://lowlighter.github.io/quadtree/docs/)
 * [About](https://lowlight.fr/en/blog/quadtree-library/)
 
+![Image of quadtree](https://github.com/lowlighter/quadtree/raw/master/demo/imgs/demo.gif)
 
 # Features
 * **Light weight** libray
