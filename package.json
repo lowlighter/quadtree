@@ -10,7 +10,7 @@
     "license": "MIT",
     "dependencies": {
         "babel-minify": "^0.2.0",
-        "jsdoc": "^3.4.3",
+        "jsdoc": "^3.5.5",
         "less": "^2.7.2",
         "less-plugin-clean-css": "^1.5.1"
     },
