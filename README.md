@@ -1,9 +1,8 @@
 # Quadtree
 This library is an implementation in JavaScript of **Quadtrees** structures.
 
-* [Live demo](https://lowlighter.github.io/quadtree/demo/)
-* [Documentation](https://lowlighter.github.io/quadtree/docs/)
-* [About](https://lowlight.fr/en/blog/quadtree-library/)
+* [Live demo](https://lowlight.fr/quadtree/demo/)
+* [Documentation](https://lowlight.fr/quadtree/docs/)
 
 ![Image of quadtree](https://github.com/lowlighter/quadtree/raw/master/demo/imgs/demo.gif)
 
